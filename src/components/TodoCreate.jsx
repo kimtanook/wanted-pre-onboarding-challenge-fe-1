@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-const TodoCreate = () => {
+const TodoCreate = ({ todos, setTodos }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -12,15 +12,17 @@ const TodoCreate = () => {
     setContent(event.target.value);
   };
 
-  const createTodo = async () => {
+  const createTodo = async (event) => {
+    event.preventDefault();
     const userToken = localStorage.getItem('userToken');
-    await axios.post(
+    const userData = await axios.post(
       'http://localhost:8080/todos',
       { title: title, content: content },
       {
         headers: { Authorization: userToken },
       }
     );
+    setTodos([...todos, userData.data.data]);
   };
   return (
     <div>
