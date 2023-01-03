@@ -23,12 +23,16 @@ function SignUp() {
 
   const onSubmitSignUp = async (event) => {
     event.preventDefault();
-    const userSignUpData = await axios.post(
-      'http://localhost:8080/users/create',
-      { email: email, password: password }
-    );
-    alert(userSignUpData.data.message);
-    navigate('/auth/signin');
+    try {
+      const userSignUpData = await axios.post(
+        'http://localhost:8080/users/create',
+        { email: email, password: password }
+      );
+      alert(userSignUpData.data.message);
+      navigate('/auth/signin');
+    } catch (error) {
+      alert(error.response.data.details);
+    }
   };
 
   const onChangeSignUpEmail = (event) => {

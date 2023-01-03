@@ -10,13 +10,17 @@ function SignIn() {
 
   const onSubmitSignIn = async (event) => {
     event.preventDefault();
-    const userSignInData = await axios.post(
-      'http://localhost:8080/users/login',
-      { email: email, password: password }
-    );
-    localStorage.setItem('userToken', userSignInData.data.token);
-    alert(userSignInData.data.message);
-    navigate('/');
+    try {
+      const userSignInData = await axios.post(
+        'http://localhost:8080/users/login',
+        { email: email, password: password }
+      );
+      localStorage.setItem('userToken', userSignInData.data.token);
+      alert(userSignInData.data.message);
+      navigate('/');
+    } catch (error) {
+      alert(error.response.data.details);
+    }
   };
   const onChangeSignInEmail = (event) => {
     setEmail(event.target.value);
