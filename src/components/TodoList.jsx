@@ -20,7 +20,7 @@ const TodoList = ({ todos, setTodos }) => {
       <div>todoList</div>
       {todos.map((item) => (
         <div key={item.id}>
-          <TodoItem todoData={item} />
+          <TodoItem todoData={item} todos={todos} setTodos={setTodos} />
         </div>
       ))}
     </div>
