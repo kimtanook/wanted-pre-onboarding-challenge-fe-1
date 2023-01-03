@@ -23,6 +23,8 @@ const TodoCreate = ({ todos, setTodos }) => {
       }
     );
     setTodos([...todos, userData.data.data]);
+    setTitle('');
+    setContent('');
   };
   return (
     <div>
@@ -31,6 +33,7 @@ const TodoCreate = ({ todos, setTodos }) => {
         <div>
           <input
             type="text"
+            value={title}
             onChange={onChangeTitle}
             placeholder="title"
             required
@@ -39,6 +42,7 @@ const TodoCreate = ({ todos, setTodos }) => {
         <div>
           <input
             type="text"
+            value={content}
             onChange={onChangeContent}
             placeholder="content"
             required
