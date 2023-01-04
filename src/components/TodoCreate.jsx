@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import styled from 'styled-components';
 
 const TodoCreate = ({ todos, setTodos }) => {
   const [title, setTitle] = useState('');
@@ -28,7 +29,6 @@ const TodoCreate = ({ todos, setTodos }) => {
   };
   return (
     <div>
-      <div>TodoCreate</div>
       <form onSubmit={createTodo}>
         <div>
           <input
@@ -37,6 +37,7 @@ const TodoCreate = ({ todos, setTodos }) => {
             onChange={onChangeTitle}
             placeholder="title"
             required
+            maxLength={13}
           />
         </div>
         <div>
@@ -46,11 +47,22 @@ const TodoCreate = ({ todos, setTodos }) => {
             onChange={onChangeContent}
             placeholder="content"
             required
+            maxLength={100}
           />
         </div>
-        <button type="submit">완료</button>
+        <StButton type="submit">완료</StButton>
       </form>
     </div>
   );
 };
 export default TodoCreate;
+
+const StButton = styled.button`
+  margin: 5px;
+  border: none;
+  border-radius: 20px;
+  background-color: black;
+  color: white;
+  width: 40px;
+  height: 20px;
+`;
