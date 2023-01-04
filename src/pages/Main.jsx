@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import TodoCreate from '../components/TodoCreate';
 import TodoList from '../components/TodoList';
 
@@ -12,16 +13,35 @@ const Main = () => {
     navigate('/auth/signin');
   };
   return (
-    <div>
+    <StMainWrap>
       {!userToken ? <Navigate to="/auth/signin" replace={true} /> : null}
       <div>
-        <button onClick={onClickLogOut}>로그아웃</button>
+        <StButton onClick={onClickLogOut}>로그아웃</StButton>
       </div>
-      <div>메인</div>
+      <StMainTitle>Todo List</StMainTitle>
       <TodoCreate todos={todos} setTodos={setTodos} />
       <TodoList todos={todos} setTodos={setTodos} />
-    </div>
+    </StMainWrap>
   );
 };
 
 export default Main;
+
+const StMainWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const StMainTitle = styled.div`
+  margin: 10px;
+  font-size: 40px;
+`;
+const StButton = styled.button`
+  margin: 5px;
+  border: none;
+  border-radius: 20px;
+  background-color: black;
+  color: white;
+  height: 25px;
+`;
