@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const TodoItem = ({ todoData, todos, setTodos }) => {
   const [toggle, setToggle] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
-
+  const navigate = useNavigate();
   const userToken = localStorage.getItem('userToken');
 
   const onClickToggle = () => {
@@ -59,36 +60,43 @@ const TodoItem = ({ todoData, todos, setTodos }) => {
   };
   return (
     <StTodoItemContainer>
-      <div>{todoData.id}</div>
       {toggle ? (
-        <form onSubmit={updateTodo}>
-          <div>
-            <input
-              type="text"
-              onChange={onChangeNewTitle}
-              placeholder="수정할 제목"
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              onChange={onChangeNewContent}
-              placeholder="수정할 내용"
-            />
-          </div>
+        <StForm onSubmit={updateTodo}>
+          <StTitleInput
+            type="text"
+            onChange={onChangeNewTitle}
+            placeholder="수정할 제목"
+            required
+            maxLength={13}
+          />
+          <StContentInput
+            type="text"
+            onChange={onChangeNewContent}
+            placeholder="수정할 내용"
+            required
+            maxLength={100}
+          />
           <button>완료</button>
-        </form>
+        </StForm>
       ) : (
         <div>
-          <div>{todoData.title}</div>
-          <div>{todoData.content}</div>
+          <StTitle>{todoData.title}</StTitle>
+          <StContent>{todoData.content}</StContent>
         </div>
       )}
-      <div>{todoData.createdAt}</div>
-      <div>{todoData.updatedAt}</div>
+      <StCreatedAt>{todoData.createdAt}</StCreatedAt>
       <div>
-        <button onClick={onClickToggle}>수정</button>
-        <button onClick={deleteTodo}>삭제</button>
+        <StButton onClick={onClickToggle}>{toggle ? '취소' : '수정'}</StButton>
+        <StButton onClick={deleteTodo}>삭제</StButton>
+      </div>
+      <div>
+        <StButton
+          onClick={() => {
+            navigate(`/todos/${todoData.id}`);
+          }}
+        >
+          상세보기
+        </StButton>
       </div>
     </StTodoItemContainer>
   );
@@ -97,5 +105,53 @@ export default TodoItem;
 
 const StTodoItemContainer = styled.div`
   border: 1px solid black;
+  border-radius: 10px;
   margin: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+`;
+const StTitle = styled.div`
+  font-size: 25px;
+  margin-top: 10px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  width: 300px;
+`;
+const StContent = styled.div`
+  font-size: 25px;
+  margin-bottom: 26px;
+  text-align: center;
+  width: 300px;
+`;
+const StForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StCreatedAt = styled.div`
+  font-size: 15px;
+`;
+const StButton = styled.button`
+  margin: 3px;
+  border: none;
+  border-radius: 15px;
+  background-color: black;
+  color: white;
+  width: 60px;
+  height: 20px;
+`;
+const StTitleInput = styled.input`
+  height: 32px;
+  width: 200px;
+`;
+const StContentInput = styled.input`
+  height: 32px;
+  width: 200px;
 `;
