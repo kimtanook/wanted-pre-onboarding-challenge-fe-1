@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import TodoItem from './TodoItem';
 
 const TodoList = ({ todos, setTodos }) => {
@@ -14,10 +14,10 @@ const TodoList = ({ todos, setTodos }) => {
 
   useEffect(() => {
     getTodos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
-      <div>todoList</div>
       {todos.map((item) => (
         <div key={item.id}>
           <TodoItem todoData={item} todos={todos} setTodos={setTodos} />
